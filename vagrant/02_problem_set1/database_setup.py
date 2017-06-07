@@ -37,7 +37,7 @@ class Puppy(Base):
     picture = Column(String(100))
 
     shelter = relationship(Shelter)
-        
+
 
 ####### insert at end of file #######
 
