@@ -24,8 +24,8 @@ def HelloWorld(restaurant_id):
 def newMenuItem(restaurant_id):
     return "page to create a new menu item."
 
-@app.route("/restaurants/<int:restaurant_id>/<int:menu_item>/edit")
-def editMenuItem(restaurant_id, menu_item):
+@app.route("/restaurants/<int:restaurant_id>/<int:menu_id>/edit")
+def editMenuItem(restaurant_id, menu_id):
     return "page to edit a menu item."
 
 @app.route("/restaurants/<int:restaurant_id>/<int:menu_id>/delete")
