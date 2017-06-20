@@ -28,7 +28,8 @@ class WebServerHandler(BaseHTTPRequestHandler):
     <h1>{0}</h1>
     <a href="/restaurant/{1}/edit">Edit</a>
     <a href="/restaurant/{1}/delete">Delete</a>
-  </div>""".format(restaurant.name, restaurant.id)
+  </div>
+""".format(restaurant.name, restaurant.id)
 
             message += "</body></html>"
             
@@ -36,25 +37,51 @@ class WebServerHandler(BaseHTTPRequestHandler):
             print message
             return
 
+        elif self.path.endswith("/restaurants/new"):
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+
+            message = """
+<html>
+  <body>
+    <form method="post" action="/restaurants/new" enctype="multipart/form-data">
+      Restaurant Name: <input type="text" name="name"/> <input type="submit" value="Add"/>
+    </form>
+  </body>
+</html>
+"""
+
+            self.wfile.write(message)
+            print message
+            return
+            
         else:
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-        try:
-            self.send_response(301)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
+
+        if self.path.endswith("/restaurants/new"):
+            
+            restaurant_name = None
             ctype, pdict = cgi.parse_header(
                 self.headers.getheader('content-type'))
             if ctype == 'multipart/form-data':
                 fields = cgi.parse_multipart(self.rfile, pdict)
-                messagecontent = fields.get('message')
-            output = ""
-            self.wfile.write(output)
-            print output
-        except:
-            pass
+                restaurant_name = fields.get('name')[0]
 
+            # create new Restaurant record
+            session = self.DBSession()
+            session.add(Restaurant(name=restaurant_name))
+            session.commit()
+
+            self.send_response(302)
+            self.send_header('Location', '/restaurants')
+            self.end_headers()
+
+        else:
+            self.send_error(404, 'File Not Found: %s' % self.path)
 
 def main():
     try:
