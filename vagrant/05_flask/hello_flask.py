@@ -23,6 +23,18 @@ def HelloWorld(restaurant_id):
         output += "<div><span>{0}</span><span>{1}</span></div><div>{2}</div>".format(i.name, i.price, i.description)
     return output
 
+@app.route("/restaurants/<int:restaurant_id>/new")
+def newMenuItem(restaurant_id):
+    return "page to create a new menu item."
+
+@app.route("/restaurants/<int:restaurant_id>/<int:menu_item>/edit")
+def editMenuItem(restaurant_id, menu_item):
+    return "page to edit a menu item."
+
+@app.route("/restaurants/<int:restaurant_id>/<int:menu_id>/delete")
+def deleteMenuItem(restaurant_id, menu_id):
+    return "page to delete a menu item."
+
 if __name__ == "__main__":
     app.debug = True
     app.run(host = "0.0.0.0", port = 5000)
