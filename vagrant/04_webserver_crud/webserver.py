@@ -56,7 +56,32 @@ class WebServerHandler(BaseHTTPRequestHandler):
             self.wfile.write(message)
             print message
             return
+
+        elif self.path.endswith("/edit"):
+
+            restaurant_id = self.path.split("/")[2]
+
+            session = self.DBSession()
+            restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
             
+            message = """
+<html>
+  <body>
+    <form method="post" enctype="multipart/form-data">
+      Restaurant Name: <input type="text" name="name" value="{0}"/> <input type="submit" value="Update"/>
+    </form>
+  </body>
+</html>
+""".format(restaurant.name)
+
+            self.wfile.write(message)
+            print message
+            return
+        
         else:
             self.send_error(404, 'File Not Found: %s' % self.path)
 
@@ -80,6 +105,30 @@ class WebServerHandler(BaseHTTPRequestHandler):
             self.send_header('Location', '/restaurants')
             self.end_headers()
 
+        elif self.path.endswith("/edit"):
+
+            restaurant_name = None
+            ctype, pdict = cgi.parse_header(
+                self.headers.getheader('content-type'))
+            if ctype == 'multipart/form-data':
+                fields = cgi.parse_multipart(self.rfile, pdict)
+                restaurant_name = fields.get('name')[0]
+                
+            restaurant_id = self.path.split("/")[2]
+
+            session = self.DBSession()
+            restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+
+            restaurant.name = restaurant_name
+
+            session.add(restaurant)
+            session.commit()
+
+            self.send_response(302)
+            self.send_header('Location', '/restaurants')
+            self.end_headers()
+            
+        
         else:
             self.send_error(404, 'File Not Found: %s' % self.path)
 
