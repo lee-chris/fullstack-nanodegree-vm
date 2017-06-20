@@ -20,7 +20,7 @@ def HelloWorld():
 
     output = ""
     for i in items:
-        output += "<div>{0}</div>".format(i.name)
+        output += "<div><span>{0}</span><span>{1}</span></div><div>{2}</div>".format(i.name, i.price, i.description)
     return output
 
 if __name__ == "__main__":
