@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Edit Restaurant</title>
+  </head>
+
+  <body>
+    <h1>Edit Restaurant</h1>
+    <form>
+	  Restaurant name: <input name="name" value="{{restaurant.name}}"/>
+	  <input type="submit" value="Submit"/>
+	  <a href="{{url_for('view_restaurants')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>

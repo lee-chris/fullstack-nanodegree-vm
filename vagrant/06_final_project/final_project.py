@@ -3,7 +3,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # static db objects
-restaurants = [{"id" : 1, "name" : "Burger King"}, {"id" : 2, "name" : "Pizza Hut"}]
+restaurants = [{"id" : 0, "name" : "Burger King"}, {"id" : 1, "name" : "Pizza Hut"}]
 
 @app.route("/")
 @app.route("/restaurants")
@@ -27,7 +27,7 @@ def delete_restaurant(restaurant_id):
 @app.route("/restaurants/edit/<int:restaurant_id>")
 def edit_restaurant(restaurant_id):
 
-    return "edit restaurant {0}".format(restaurant_id)
+    return render_template("edit_restaurant.html", restaurant = restaurants[restaurant_id])
 
 
 @app.route("/restaurants/<int:restaurant_id>/menu")
