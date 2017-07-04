@@ -1,0 +1,15 @@
+body {
+	text-align: center;	
+}
+
+.menu-item {
+	margin-top: 1em;
+}
+
+.menu-item .name {
+	font-size: 24px;
+}
+
+.menu-item .price {
+	font-weight: bold;
+}
