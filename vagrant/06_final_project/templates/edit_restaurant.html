@@ -7,7 +7,7 @@
 
   <body>
     <h1>Edit Restaurant</h1>
-    <form>
+    <form method="POST">
 	  Restaurant name: <input name="name" value="{{restaurant.name}}"/>
 	  <input type="submit" value="Submit"/>
 	  <a href="{{url_for('view_restaurants')}}">Cancel</a>
