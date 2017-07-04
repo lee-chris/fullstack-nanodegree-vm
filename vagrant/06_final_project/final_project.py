@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -21,6 +21,14 @@ def view_restaurants():
     return render_template("restaurants.html", restaurants = restaurants)
 
 
+@app.route("/restaurants/JSON")
+def view_restaurants_json():
+
+    session = DBSession()
+    restaurants = session.query(Restaurant).all()
+
+    return jsonify(restaurants=[restaurant.serialize for restaurant in restaurants])
+    
 @app.route("/restaurants/new", methods=["GET", "POST"])
 def create_restaurant():
 
@@ -83,6 +91,16 @@ def view_menu(restaurant_id):
     return render_template("view_menu.html", restaurant = restaurant, items = menu_items)
 
 
+@app.route("/restaurants/<int:restaurant_id>/menu/JSON")
+def view_menu_json(restaurant_id):
+
+    session = DBSession()
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    menu_items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
+
+    return jsonify(menu_items=[menu_item.serialize for menu_item in menu_items])
+
+
 @app.route("/restaurants/<int:restaurant_id>/menu/new", methods=["GET", "POST"])
 def create_menu_item(restaurant_id):
 
@@ -141,6 +159,16 @@ def edit_menu_item(restaurant_id, menu_item_id):
         session.commit()
 
         return redirect(url_for("view_menu", restaurant_id = restaurant_id))
+
+
+@app.route("/restaurants/<int:restaurant_id>/menu/JSON/<int:menu_item_id>")
+def view_menu_item_json(restaurant_id, menu_item_id):
+
+    session = DBSession()
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    item = session.query(MenuItem).filter_by(id = menu_item_id).one()
+
+    return jsonify(menu_item=item.serialize)
 
 
 if __name__ == "__main__":
