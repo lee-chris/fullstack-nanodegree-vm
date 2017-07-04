@@ -40,7 +40,7 @@ def view_menu(restaurant_id):
 @app.route("/restaurants/<int:restaurant_id>/menu/new")
 def create_menu_item(restaurant_id):
 
-    return "create new menu item for restaurant {0}".format(restaurant_id)
+    return render_template("new_menu_item.html", restaurant = restaurants[restaurant_id])
 
 
 @app.route("/restaurants/<int:restaurant_id>/menu/delete/<int:menu_item_id>")
