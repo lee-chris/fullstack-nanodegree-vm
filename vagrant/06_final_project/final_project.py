@@ -52,7 +52,7 @@ def delete_menu_item(restaurant_id, menu_item_id):
 @app.route("/restaurants/<int:restaurant_id>/menu/edit/<int:menu_item_id>")
 def edit_menu_item(restaurant_id, menu_item_id):
 
-    return "edit menu item {0} from restaurant {1}".format(menu_item_id, restaurant_id)
+    return render_template("edit_menu_item.html", restaurant = restaurants[restaurant_id], item = menu_items[restaurant_id][menu_item_id])
 
 
 if __name__ == "__main__":
