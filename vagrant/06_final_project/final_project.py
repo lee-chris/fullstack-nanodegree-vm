@@ -1,12 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
+
+# static db objects
+restaurants = [{"id" : 1, "name" : "Burger King"}, {"id" : 2, "name" : "Pizza Hut"}]
 
 @app.route("/")
 @app.route("/restaurants")
 def view_restaurants():
 
-    return "view all restaurants"
+    return render_template("restaurants.html", restaurants = restaurants)
 
 
 @app.route("/restaurants/new")
