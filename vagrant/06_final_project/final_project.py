@@ -15,7 +15,7 @@ def view_restaurants():
 @app.route("/restaurants/new")
 def create_restaurant():
 
-    return "create new restaurant"
+    return render_template("new_restaurant.html")
 
 
 @app.route("/restaurants/delete/<int:restaurant_id>")
