@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 # static db objects
 restaurants = [{"id" : 0, "name" : "Burger King"}, {"id" : 1, "name" : "Pizza Hut"}]
+menu_items = [[{"id" : 0, "name" : "Whopper", "price" : "$2.99"}], [{"id" : 0, "name" : "Meat Lovers", "price" : "$10.99"}, {"id" : 1, "name" : "Veggie Lovers", "price" : "$9.99"}]]
 
 @app.route("/")
 @app.route("/restaurants")
@@ -33,7 +34,7 @@ def edit_restaurant(restaurant_id):
 @app.route("/restaurants/<int:restaurant_id>/menu")
 def view_menu(restaurant_id):
 
-    return "view menu for restaurant {0}".format(restaurant_id)
+    return render_template("view_menu.html", restaurant = restaurants[restaurant_id], items = menu_items[restaurant_id])
 
 
 @app.route("/restaurants/<int:restaurant_id>/menu/new")
