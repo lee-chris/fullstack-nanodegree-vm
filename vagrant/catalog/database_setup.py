@@ -22,6 +22,17 @@ class Category(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(100), nullable = False)
     
+    @property
+    def serialize(self):
+        return {
+            "id" : self.id,
+            "name" : self.name
+        }
+    
+    
+    def __str__(self):
+        return "Category: {0}, {1}".format(self.id, self.name)
+    
 
 class Item(Base):
     """Item in the catalog."""
@@ -33,6 +44,19 @@ class Item(Base):
     description = Column(String(250))
     category_id = Column(Integer, ForeignKey("categories.id"))
     category = relationship(Category)
+    
+    @property
+    def serialize(self):
+        return {
+            "id" : self.id,
+            "name" : self.name,
+            "description" : self.description,
+            "category_id" : self.category_id
+        }
+    
+    
+    def __str__(self):
+        return "Item: {0}, {1}".format(self.id, self.name)
 
 
 engine = create_engine("sqlite:///item_catalog.db")
