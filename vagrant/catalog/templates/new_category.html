@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>New Product Category</title>
+  </head>
+
+  <body>
+    <h1>New Product Category</h1>
+    <form action="/categories" method="POST">
+	  Category name: <input name="name"/>
+	  <input type="submit" value="Submit"/>
+	  <a href="{{url_for('view_categories')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>

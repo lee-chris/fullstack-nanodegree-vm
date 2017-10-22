@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>Product Categories</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  </head>
+  
+  <body>
+  
+    <h1>Product Categories</h1>
+    
+    <a href="{{ url_for('new_category') }}">Create new product category</a>
+    
+    {% for category in categories %}
+    <div class="item">
+      <h2>{{category.name}}</h2>
+    </div>
+    {% endfor %}
+  </body>
+  
+</html>
