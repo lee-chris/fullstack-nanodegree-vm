@@ -38,17 +38,22 @@ class ItemDao(object):
         return item
         
         
-    def edit_item(self, item):
+    def edit_item(self, item_to_edit):
         """Edit the properties of an existing item in the database."""
         
         session = self.DBSession()
         
-        item_to_edit = self.get_item(item.id, session = session)
-        item_to_edit.name = item.name
+        item = self.get_item(item_to_edit.id, session = session)
+        item.name = item_to_edit.name
+        item.category_id = item_to_edit.category_id
+        item.description = item_to_edit.description
         
-        session.add(item_to_edit)
+        session.add(item)
         session.commit()
+        session.refresh(item)
         session.close()
+        
+        return item
         
         
     def delete_item(self, item):

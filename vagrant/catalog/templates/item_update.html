@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Edit Catalog Item</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='category_form.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#category_id").val({{ item.category_id }});
+        });
+    </script>
+  </head>
+
+  <body>
+    <h1>Edit Catalog Item</h1>
+    <form action="/items/{{item.id}}" method="PUT">
+      Category: <select id="category_id" name="category_id">
+      {% for category in categories %}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+      </select>
+	  Name: <input name="name" value="{{ item.name }}"/>
+      Description: <textarea name="description">{{ item.description }}</textarea>
+	  <input id="submit" type="button" value="Submit"/>
+	  <a id="cancel" href="{{url_for('view_items_html')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>

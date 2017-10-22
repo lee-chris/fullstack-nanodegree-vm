@@ -156,6 +156,34 @@ def create_item():
     item = item_dao.create_item(item)
     
     return jsonify(item.serialize)
+
+
+@app.route("/items/<int:item_id>/update", methods = ["GET"])
+def view_update_item_form(item_id):
+    """Display html form to update an item."""
+    
+    categories = item_dao.get_categories()
+    item = item_dao.get_item(item_id)
+    
+    return render_template("item_update.html", item = item, categories = categories)
+
+
+@app.route("/items/<int:item_id>", methods = ["PUT"])
+def update_item(item_id):
+    """Handle request to update an item."""
+    
+    item = Item()
+    
+    item.id = item_id
+    item.name = request.form["name"]
+    item.category_id = request.form["category_id"]
+    
+    if request.form["description"] != "":
+        item.description = request.form["description"]
+    
+    item = item_dao.edit_item(item)
+    
+    return jsonify(item.serialize)
     
     
 if __name__ == "__main__":
