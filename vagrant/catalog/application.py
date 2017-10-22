@@ -18,6 +18,14 @@ def view_categories():
     """Display page of all product categories."""
     
     categories = item_dao.get_categories()
+    return jsonify(categories = [category.serialize for category in categories])
+
+
+@app.route("/categories/admin", methods = ["GET"])
+def view_categories_html():
+    """Display page of all product categories."""
+    
+    categories = item_dao.get_categories()
     return render_template("categories.html", categories = categories)
 
 
