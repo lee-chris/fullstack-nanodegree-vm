@@ -45,7 +45,7 @@ def view_categories_html():
 def view_create_category_form():
     """Display form to create a new category."""
     
-    return render_template("view_create_category_form.html")
+    return render_template("category_create.html")
 
 
 @app.route("/categories", methods = ["POST"])
@@ -66,7 +66,7 @@ def view_update_category_form(category_id):
     
     category = item_dao.get_category(category_id)
     
-    return render_template("view_update_category_form.html", category = category);
+    return render_template("category_update.html", category = category);
 
 
 @app.route("/categories/<int:category_id>", methods = ["PUT"])
@@ -88,7 +88,7 @@ def view_delete_category_form(category_id):
     
     category = item_dao.get_category(category_id)
     
-    return render_template("view_delete_category_form.html", category = category);
+    return render_template("category_delete.html", category = category);
 
 
 @app.route("/categories/<int:category_id>", methods = ["DELETE"])
