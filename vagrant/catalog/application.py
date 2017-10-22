@@ -21,6 +21,18 @@ def view_categories():
     return jsonify(categories = [category.serialize for category in categories])
 
 
+@app.route("/categories/<int:category_id>", methods = ["GET"])
+def get_category(category_id):
+    """Handle request to get a specific category."""
+    
+    category = item_dao.get_category(category_id)
+    
+    if category is None:
+        return jsonify({})
+        
+    return jsonify(category.serialize)
+
+
 @app.route("/categories/admin", methods = ["GET"])
 def view_categories_html():
     """Display page of all product categories."""
