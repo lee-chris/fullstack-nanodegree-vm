@@ -3,14 +3,16 @@
 
   <head>
     <title>New Product Category</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='category_form.js') }}"></script>
   </head>
 
   <body>
     <h1>New Product Category</h1>
     <form action="/categories" method="POST">
 	  Category name: <input name="name"/>
-	  <input type="submit" value="Submit"/>
-	  <a href="{{url_for('view_categories')}}">Cancel</a>
+	  <input id="submit" type="button" value="Submit"/>
+	  <a id="cancel" href="{{url_for('view_categories')}}">Cancel</a>
 	</form>
   </body>
 

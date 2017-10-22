@@ -35,9 +35,9 @@ def create_category():
     category = Category()
     category.name = request.form["name"]
     
-    item_dao.create_category(category)
+    category = item_dao.create_category(category)
     
-    return redirect(url_for("view_categories"))
+    return jsonify(category.serialize)
 
 
 @app.route("/categories/<int:category_id>/update", methods = ["GET"])

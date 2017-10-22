@@ -98,7 +98,10 @@ class ItemDao(object):
         session = self.DBSession()
         session.add(category)
         session.commit()
+        session.refresh(category)
         session.close()
+        
+        return category
 
 
     def get_categories(self):
