@@ -16,6 +16,7 @@
     <div class="item">
       <h2>{{category.name}}</h2>
       <a href="{{ url_for('view_update_category_form', category_id = category.id) }}">Edit</a>
+      <a href="{{ url_for('view_delete_category_form', category_id = category.id) }}">Delete</a>
     </div>
     {% endfor %}
   </body>

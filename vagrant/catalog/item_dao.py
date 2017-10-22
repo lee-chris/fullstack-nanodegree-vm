@@ -161,6 +161,8 @@ class ItemDao(object):
         session.delete(category)
         session.commit()
         session.close()
+        
+        return category
 
 
 def test_create_item(item_dao):

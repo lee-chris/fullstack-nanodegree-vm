@@ -60,6 +60,27 @@ def update_category(category_id):
     category = item_dao.edit_category(category)
     
     return jsonify(category.serialize)
+
+
+@app.route("/categories/<int:category_id>/delete", methods = ["GET"])
+def view_delete_category_form(category_id):
+    """Display form to delete a product category."""
+    
+    category = item_dao.get_category(category_id)
+    
+    return render_template("view_delete_category_form.html", category = category);
+
+
+@app.route("/categories/<int:category_id>", methods = ["DELETE"])
+def delete_category(category_id):
+    """Handle request to delete a product category."""
+    
+    category = Category()
+    category.id = category_id
+    
+    category = item_dao.delete_category(category)
+    
+    return jsonify(category.serialize)
     
     
 if __name__ == "__main__":

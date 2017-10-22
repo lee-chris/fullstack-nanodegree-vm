@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Delete Product Category</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='category_form.js') }}"></script>
+  </head>
+
+  <body>
+    <h1>Delete Product Category</h1>
+    <form action="/categories/{{category.id}}" method="DELETE">
+	  Confirm deletion of product category: {{category.name}} ?
+	  <input id="submit" type="button" value="Submit"/>
+	  <a id="cancel" href="{{url_for('view_categories')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>
