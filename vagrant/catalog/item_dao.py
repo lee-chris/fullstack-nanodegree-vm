@@ -16,9 +16,14 @@ class ItemDao(object):
         saved to item_catalog.db.
         """
         
-        engine = create_engine("sqlite:///item_catalog.db")
-        Base.metadata.bind = engine
-        self.DBSession = sessionmaker(bind=engine)
+        self.engine = create_engine("sqlite:///item_catalog.db")
+        Base.metadata.bind = self.engine
+        self.DBSession = sessionmaker(bind=self.engine)
+    
+    
+    def close(self):
+        
+        self.engine.dispose()
     
     
     def create_item(self, item):
@@ -27,6 +32,7 @@ class ItemDao(object):
         session = self.DBSession()
         session.add(item)
         session.commit()
+        session.close()
         
         
     def edit_item(self, item):
@@ -34,11 +40,12 @@ class ItemDao(object):
         
         session = self.DBSession()
         
-        item_to_edit = self.get_item(item.id, session)
+        item_to_edit = self.get_item(item.id, session = session)
         item_to_edit.name = item.name
         
         session.add(item_to_edit)
         session.commit()
+        session.close()
         
         
     def delete_item(self, item):
@@ -46,29 +53,108 @@ class ItemDao(object):
         
         session = self.DBSession()
         
-        item_to_delete = self.get_item(item.id, session)
+        item_to_delete = self.get_item(item.id, session = session)
         
         session.delete(item_to_delete)
         session.commit()
+        session.close()
     
     
     def get_items(self):
         """Get all items in the database."""
         
         session = self.DBSession()
-        return session.query(Item).all()
+        items = session.query(Item).all()
+        session.close()
+        
+        return items
     
     
     def get_item(self, item_id, session = None):
         """Get a specific item in the database by id."""
         
-        if session is None:
+        is_session_open = False
+        
+        if session is not None:
+            is_session_open = True
+        
+        if is_session_open == False:
             session = self.DBSession()
         
+        item = None
         try:
-            return session.query(Item).filter_by(id = item_id).one()
+            item = session.query(Item).filter_by(id = item_id).one()
         except NoResultFound:
-            return None
+            item = None
+        
+        if is_session_open == False:
+            session.close()
+        return item
+    
+    
+    def create_category(self, category):
+        """Create a new product category."""
+        
+        session = self.DBSession()
+        session.add(category)
+        session.commit()
+        session.close()
+
+
+    def get_categories(self):
+        """Get all product categories."""
+        
+        session = self.DBSession()
+        categories = session.query(Category).all()
+        
+        session.close()
+        return categories
+
+
+    def get_category(self, category_id, session = None):
+        """Get a specific category."""
+        
+        is_session_open = False
+        if session is not None:
+            is_session_open = True
+        
+        if is_session_open == False:
+            session = self.DBSession()
+        
+        category = None
+        try:
+            category = session.query(Category).filter_by(id = category_id).one()
+        except NoResultFound:
+            category = None
+        
+        if is_session_open == False:
+            session.close()
+        
+        return category
+    
+    
+    def edit_category(self, category_to_edit):
+        """Edit a category."""
+        
+        session = self.DBSession()
+        
+        category = self.get_category(category_to_edit.id, session = session)
+        
+        category.name = category_to_edit.name
+        session.add(category)
+        session.commit()
+        session.close()
+    
+    
+    def delete_category(self, category_to_delete):
+        """Delete a category."""
+        
+        session = self.DBSession()
+        
+        category = self.get_category(category_to_delete.id, session = session)
+        session.delete(category)
+        session.commit()
+        session.close()
 
 
 def test_create_item(item_dao):
@@ -120,11 +206,62 @@ def test_delete_item(item_dao):
     item_dao.delete_item(item)
     
     assert item_dao.get_item(1) is None
+
+def test_create_category(item_dao):
+    
+    category = Category()
+    
+    category.id = 1
+    category.name = "Video Games"
+    
+    item_dao.create_category(category)
+
+
+def test_get_categories(item_dao):
+    
+    categories = item_dao.get_categories()
+    
+    assert len(categories) == 1
+    assert categories[0].name == "Video Games"
+
+
+def test_get_category(item_dao):
+    
+    category = item_dao.get_category(1)
+    
+    assert category is not None
+    assert category.name == "Video Games"
+
+
+def test_edit_category(item_dao):
+    
+    category = Category()
+    
+    category.id = 1
+    category.name = "Video Game Consoles"
+    
+    item_dao.edit_category(category)
+    
+    category = item_dao.get_category(1)
+    
+    assert category is not None
+    assert category.name == "Video Game Consoles"
+
+    
+def test_delete_category(item_dao):
+    
+    category = Category()
+    category.id = 1
+    
+    item_dao.delete_category(category)
+    
+    category = item_dao.get_category(1)
+    
+    assert category is None
     
     
 if __name__ == "__main__":
     
-    #os.remove("item_catalog.db")
     item_dao = ItemDao()
     
     test_create_item(item_dao)
@@ -134,3 +271,12 @@ if __name__ == "__main__":
     test_edit_item(item_dao)
     test_delete_item(item_dao)
     
+    test_create_category(item_dao)
+    test_get_categories(item_dao)
+    test_get_category(item_dao)
+    test_edit_category(item_dao)
+    test_delete_category(item_dao)
+    
+    item_dao.close()
+    os.remove("item_catalog.db")
+  
