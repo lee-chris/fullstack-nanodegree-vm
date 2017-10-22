@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>Catalog Items</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  </head>
+  
+  <body>
+  
+    <h1>Catalog Items</h1>
+    <!--
+    <a href="{{ url_for('view_create_category_form') }}">Create new product category</a>
+    -->
+    {% for item in items %}
+    <div class="item">
+      <h2>{{item.name}}</h2>
+      <!--
+      <a href="{{ url_for('view_update_category_form', category_id = category.id) }}">Edit</a>
+      <a href="{{ url_for('view_delete_category_form', category_id = category.id) }}">Delete</a>
+      -->
+    </div>
+    {% endfor %}
+  </body>
+  
+</html>
