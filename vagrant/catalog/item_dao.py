@@ -1,7 +1,7 @@
 import os
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
 from database_setup import Base, Category, Item
@@ -114,11 +114,16 @@ class ItemDao(object):
         return category
 
 
-    def get_categories(self):
+    def get_categories(self, include_items = False):
         """Get all product categories."""
         
         session = self.DBSession()
         categories = session.query(Category).all()
+        
+        # lazy load items
+        if include_items == True:
+            for category in categories:
+                category.items
         
         session.close()
         return categories

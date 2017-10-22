@@ -13,6 +13,14 @@ def view_product_catalog():
     return render_template("catalog.html", items = items)
 
 
+@app.route("/catalog", methods = ["GET"])
+def get_catalog():
+    """Handle request to get full catalog."""
+    
+    categories = item_dao.get_categories(include_items = True)
+    return jsonify(categories = [category.serialize_full for category in categories])
+
+
 @app.route("/categories", methods = ["GET"])
 def view_categories():
     """Display page of all product categories."""

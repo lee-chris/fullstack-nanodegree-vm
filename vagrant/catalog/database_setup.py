@@ -22,11 +22,23 @@ class Category(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(100), nullable = False)
     
+    items = relationship("Item", backref="categories")
+    
     @property
     def serialize(self):
+        
         return {
             "id" : self.id,
             "name" : self.name
+        }
+    
+    @property
+    def serialize_full(self):
+        
+        return {
+            "id" : self.id,
+            "name" : self.name,
+            "items" : [item.serialize for item in self.items]
         }
     
     
