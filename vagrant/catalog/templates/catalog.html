@@ -7,7 +7,10 @@
   </head>
   
   <body>
-  
+    
+    <a href="{{ url_for('view_categories_html') }}">Edit Categories</a>
+    <a href="{{ url_for('view_items_html') }}">Edit Items</a>
+    
     <h1>Product Catalog</h1>
     
     {% for item in items %}
