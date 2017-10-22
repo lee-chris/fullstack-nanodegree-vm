@@ -143,7 +143,10 @@ class ItemDao(object):
         category.name = category_to_edit.name
         session.add(category)
         session.commit()
+        session.refresh(category)
         session.close()
+        
+        return category
     
     
     def delete_category(self, category_to_delete):

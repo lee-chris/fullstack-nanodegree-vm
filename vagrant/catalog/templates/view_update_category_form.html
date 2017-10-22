@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Edit Product Category</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='update_category.js') }}"></script>
+  </head>
+
+  <body>
+    <h1>Edit Product Category</h1>
+    <form action="/categories/{{category.id}}" method="PUT">
+	  Category name: <input name="name" value="{{category.name}}"/>
+	  <input id="submit" type="button" value="Submit"/>
+	  <a id="cancel" href="{{url_for('view_categories')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>

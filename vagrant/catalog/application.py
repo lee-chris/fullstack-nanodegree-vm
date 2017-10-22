@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from item_dao import ItemDao
 from database_setup import Item, Category
 
@@ -40,6 +40,28 @@ def create_category():
     return redirect(url_for("view_categories"))
 
 
+@app.route("/categories/<int:category_id>/update", methods = ["GET"])
+def view_update_category_form(category_id):
+    """Display form to update a product category."""
+    
+    category = item_dao.get_category(category_id)
+    
+    return render_template("view_update_category_form.html", category = category);
+
+
+@app.route("/categories/<int:category_id>", methods = ["PUT"])
+def update_category(category_id):
+    """Handle request to update a product category."""
+    
+    category = Category()
+    category.id = category_id
+    category.name = request.form["name"]
+    
+    category = item_dao.edit_category(category)
+    
+    return jsonify(category.serialize)
+    
+    
 if __name__ == "__main__":
     app.secret_key = "super_secret_key"
     app.debug = True
