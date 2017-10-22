@@ -32,7 +32,10 @@ class ItemDao(object):
         session = self.DBSession()
         session.add(item)
         session.commit()
+        session.refresh(item)
         session.close()
+        
+        return item
         
         
     def edit_item(self, item):

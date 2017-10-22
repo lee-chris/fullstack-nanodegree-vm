@@ -131,6 +131,31 @@ def view_items_html():
     items = item_dao.get_items()
     
     return render_template("items.html", items = items)
+
+
+@app.route("/items/new", methods = ["GET"])
+def view_create_item_form():
+    """Display html form used to create a new item."""
+    
+    categories = item_dao.get_categories()
+    
+    return render_template("item_create.html", categories = categories)
+
+
+@app.route("/items", methods = ["POST"])
+def create_item():
+    """Handle request to create a new item."""
+    
+    item = Item()
+    item.name = request.form["name"]
+    item.category_id = request.form["category_id"]
+    
+    if request.form["description"] != "":
+        item.description = request.form["description"]
+    
+    item = item_dao.create_item(item)
+    
+    return jsonify(item.serialize)
     
     
 if __name__ == "__main__":
