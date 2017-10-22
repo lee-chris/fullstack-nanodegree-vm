@@ -16,6 +16,7 @@
     <div class="item">
       <h2>{{item.name}}</h2>
       <a href="{{ url_for('view_update_item_form', item_id = item.id) }}">Edit</a>
+      <a href="{{ url_for('view_delete_item_form', item_id = item.id) }}">Delete</a>
     </div>
     {% endfor %}
   </body>

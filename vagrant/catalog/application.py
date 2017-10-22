@@ -184,6 +184,27 @@ def update_item(item_id):
     item = item_dao.edit_item(item)
     
     return jsonify(item.serialize)
+
+
+@app.route("/items/<int:item_id>/delete", methods = ["GET"])
+def view_delete_item_form(item_id):
+    """Display html form to delete an item."""
+    
+    item = item_dao.get_item(item_id)
+    
+    return render_template("item_delete.html", item = item)
+
+
+@app.route("/items/<int:item_id>", methods = ["DELETE"])
+def delete_item(item_id):
+    """Handle request to delete an item."""
+    
+    item = Item()
+    item.id = item_id
+    
+    item = item_dao.delete_item(item)
+    
+    return jsonify(item.serialize)
     
     
 if __name__ == "__main__":

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Delete Catalog Item</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='category_form.js') }}"></script>
+  </head>
+
+  <body>
+    <h1>Delete Catalog Item</h1>
+    <form action="/items/{{item.id}}" method="DELETE">
+	  Confirm deletion of catalog item: {{item.name}} ?
+	  <input id="submit" type="button" value="Submit"/>
+	  <a id="cancel" href="{{url_for('view_items_html')}}">Cancel</a>
+	</form>
+  </body>
+
+</html>

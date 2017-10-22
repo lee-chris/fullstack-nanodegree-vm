@@ -66,6 +66,8 @@ class ItemDao(object):
         session.delete(item_to_delete)
         session.commit()
         session.close()
+        
+        return item
     
     
     def get_items(self):
