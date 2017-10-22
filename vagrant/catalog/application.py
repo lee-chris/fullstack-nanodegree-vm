@@ -22,10 +22,10 @@ def view_categories():
 
 
 @app.route("/categories/new", methods = ["GET"])
-def new_category():
+def view_create_category_form():
     """Display form to create a new category."""
     
-    return render_template("new_category.html")
+    return render_template("view_create_category_form.html")
 
 
 @app.route("/categories", methods = ["POST"])
