@@ -101,6 +101,36 @@ def delete_category(category_id):
     category = item_dao.delete_category(category)
     
     return jsonify(category.serialize)
+
+
+@app.route("/items", methods = ["GET"])
+def get_items():
+    """Handle request to get items."""
+    
+    items = item_dao.get_items()
+    
+    return jsonify(items = [item.serialize for item in items])
+
+
+@app.route("/items/<int:item_id>", methods = ["GET"])
+def get_item(item_id):
+    """Handle request get a specific item."""
+    
+    item = item_dao.get_item(item_id)
+    
+    if item is None:
+        return jsonify({})
+    
+    return jsonify(item.serialize)
+
+
+@app.route("/items/admin", methods = ["GET"])
+def view_items_html():
+    """Display page used to create, edit, delete items."""
+    
+    items = item_dao.get_items()
+    
+    return render_template("items.html", items = items)
     
     
 if __name__ == "__main__":
