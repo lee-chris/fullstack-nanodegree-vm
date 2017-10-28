@@ -5,10 +5,18 @@
     <title>New Catalog Item</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='category_form.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   </head>
 
   <body>
-    <h1>New Catalog Item</h1>
+    <div class="menu-bar">
+      <div class="menu-items">
+        <div class="menu-item">
+          <a id="cancel" href="{{url_for('view_items_html')}}">Back</a>
+        </div>
+      </div>
+      <h1>New Catalog Item</h1>
+    </div>
     <form action="/items" method="POST">
       Category: <select name="category_id">
       {% for category in categories %}
@@ -18,7 +26,6 @@
 	  Name: <input name="name"/>
       Description: <textarea name="description"></textarea>
 	  <input id="submit" type="button" value="Submit"/>
-	  <a id="cancel" href="{{url_for('view_items_html')}}">Cancel</a>
 	</form>
   </body>
 

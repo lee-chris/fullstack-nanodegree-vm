@@ -5,6 +5,26 @@
 
 h1 {
     width: 100%;
+    text-align: center;
+}
+
+.menu-bar {
+    position: relative;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.menu-bar a {
+    color: #ffffff;
+}
+
+.menu-items {
+    position: absolute;
+}
+
+.menu-item {
+    float: left;
+    padding: 0.5em;
 }
 
 .categories {

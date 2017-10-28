@@ -8,10 +8,17 @@
   
   <body>
   
-    <h1>Product Categories</h1>
-    
-    <a href="{{ url_for('view_create_category_form') }}">Create new product category</a>
-    <a href="{{ url_for('view_product_catalog') }}">Home</a>
+    <div class="menu-bar">
+      <div class="menu-items">
+        <div class="menu-item">
+          <a href="{{ url_for('view_product_catalog') }}">Home</a>
+        </div>
+        <div class="menu-item">
+          <a href="{{ url_for('view_create_category_form') }}">New category</a>
+        </div>
+      </div>
+      <h1>Product Categories</h1>
+    </div>
     
     {% for category in categories %}
     <div class="item">

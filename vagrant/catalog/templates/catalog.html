@@ -8,12 +8,15 @@
   
   <body>
     
-    <a href="{{ url_for('view_categories_html') }}">Edit Categories</a>
-    <a href="{{ url_for('view_items_html') }}">Edit Items</a>
+    <div class="menu-bar">
+        <div class="menu-items">
+            <div class="menu-item"><a href="{{ url_for('view_categories_html') }}">Edit Categories</a></div>
+            <div class="menu-item"><a href="{{ url_for('view_items_html') }}">Edit Items</a></div>
+        </div>
+        <h1>Product Catalog</h1>
+    </div>
     
     <div class="catalog">
-    
-        <h1>Product Catalog</h1>
         
         <div class="categories">
             

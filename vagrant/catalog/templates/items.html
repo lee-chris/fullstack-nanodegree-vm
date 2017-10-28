@@ -7,11 +7,17 @@
   </head>
   
   <body>
-  
-    <h1>Catalog Items</h1>
-    
-    <a href="{{ url_for('view_create_item_form') }}">Create new catalog item</a>
-    <a href="{{ url_for('view_product_catalog') }}">Home</a>
+    <div class="menu-bar">
+      <div class="menu-items">
+        <div class="menu-item">
+          <a href="{{ url_for('view_product_catalog') }}">Home</a>
+        </div>
+        <div class="menu-item">
+          <a href="{{ url_for('view_create_item_form') }}">New item</a>
+        </div>
+      </div>
+      <h1>Catalog Items</h1>
+    </div>
 
     {% for item in items %}
     <div class="item">

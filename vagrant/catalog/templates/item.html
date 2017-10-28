@@ -7,8 +7,14 @@
     
     <body>
         
-        <h1>{{item.name}}</h1>
+        <div class="menu-bar">
+            <div class="menu-items">
+                <div class="menu-item"><a href="/catalog/{{category.id}}">Back</a></div>
+            </div>
+            <h1>{{item.name}}</h1>
+        </div>
         
+        <h2>Description</h2>
         {{item.description}}
         
     </body>

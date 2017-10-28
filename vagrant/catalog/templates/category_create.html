@@ -5,14 +5,22 @@
     <title>New Product Category</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='category_form.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   </head>
 
   <body>
-    <h1>New Product Category</h1>
+    <div class="menu-bar">
+      <div class="menu-items">
+        <div class="menu-item">
+          <a id="cancel" href="{{url_for('view_categories_html')}}">Back</a>
+        </div>
+      </div>
+      <h1>New Product Category</h1>
+    </div>
+    
     <form action="/categories" method="POST">
 	  Category name: <input name="name"/>
 	  <input id="submit" type="button" value="Submit"/>
-	  <a id="cancel" href="{{url_for('view_categories_html')}}">Cancel</a>
 	</form>
   </body>
 
