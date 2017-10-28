@@ -36,8 +36,7 @@
             {% for item in items %}
             
             <div class="item">
-              <h3>{{item.name}}</h3>
-              {{item.description}}
+              <h3><a href="/catalog/{{category.id}}/{{item.id}}">{{item.name}}</a></h3>
             </div>
             
             {% endfor %}

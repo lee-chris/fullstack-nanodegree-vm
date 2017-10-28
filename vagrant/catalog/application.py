@@ -22,6 +22,17 @@ def view_product_catalog(category_id = None):
     return render_template("catalog.html", categories = categories, category = category, items = items)
 
 
+@app.route("/catalog/<int:category_id>/<int:item_id>")
+def view_product(category_id, item_id):
+    """Display the details page for a specific item."""
+    
+    category = item_dao.get_category(category_id = category_id)
+    item = item_dao.get_item(item_id = item_id)
+    
+    return render_template("item.html", category = category, item = item)
+    
+
+
 @app.route("/catalog.json", methods = ["GET"])
 def get_catalog():
     """Handle request to get full catalog."""

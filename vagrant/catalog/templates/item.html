@@ -1,0 +1,15 @@
+<html>
+
+    <head>
+        <title>Product Catalog: {{item.name}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    
+    <body>
+        
+        <h1>{{item.name}}</h1>
+        
+        {{item.description}}
+        
+    </body>
+</html>
