@@ -1,0 +1,16 @@
+.catalog {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h1 {
+    width: 100%;
+}
+
+.categories {
+    width: 25%;
+}
+
+.items {
+    width: 75%;
+}

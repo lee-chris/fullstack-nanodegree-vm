@@ -70,11 +70,17 @@ class ItemDao(object):
         return item
     
     
-    def get_items(self):
+    def get_items(self, category_id = None):
         """Get all items in the database."""
         
         session = self.DBSession()
-        items = session.query(Item).all()
+        items = None
+        
+        if category_id is None:
+            items = session.query(Item).all()
+        else:
+            items = session.query(Item).filter_by(category_id = category_id).all()
+        
         session.close()
         
         return items

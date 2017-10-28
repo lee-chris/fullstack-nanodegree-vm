@@ -6,14 +6,23 @@ app = Flask(__name__)
 item_dao = ItemDao()
 
 @app.route("/")
-def view_product_catalog():
+@app.route("/catalog")
+@app.route("/catalog/<int:category_id>")
+def view_product_catalog(category_id = None):
     """Display main product catalog page."""
     
-    items = item_dao.get_items()
-    return render_template("catalog.html", items = items)
+    categories = item_dao.get_categories(include_items = True)
+    
+    if category_id is None:    
+        return render_template("catalog.html", categories = categories)
+    
+    category = item_dao.get_category(category_id = category_id)
+    items = item_dao.get_items(category_id = category_id)
+    
+    return render_template("catalog.html", categories = categories, category = category, items = items)
 
 
-@app.route("/catalog", methods = ["GET"])
+@app.route("/catalog.json", methods = ["GET"])
 def get_catalog():
     """Handle request to get full catalog."""
     
