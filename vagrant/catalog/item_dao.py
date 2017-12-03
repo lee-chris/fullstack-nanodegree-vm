@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 
 
 class ItemDao(object):
@@ -26,6 +26,30 @@ class ItemDao(object):
         self.engine.dispose()
     
     
+    def createUser(self, login_session):
+        newUser = User(name=login_session['username'], email=login_session['email'], picture=login_session['picture'])
+        session = self.DBSession()
+        session.add(newUser)
+        session.commit()
+        user = session.query(User).filter_by(email=login_session['email']).one()
+        return user.id
+
+
+    def getUserInfo(self, user_id):
+        session = self.DBSession()
+        user = session.query(User).filter_by(id=user_id).one()
+        return user
+
+
+    def getUserID(self, email):
+        try:
+            session = self.DBSession()
+            user = session.query(User).filter_by(email=email).one()
+            return user.id
+        except:
+            return None
+
+
     def create_item(self, item):
         """Persist a new item to the database."""
         
