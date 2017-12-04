@@ -145,6 +145,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+        del login_session['user_id']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -162,13 +163,17 @@ def view_product_catalog(category_id = None):
     
     categories = item_dao.get_categories(include_items = True)
     
+    user_id = None
+    if "user_id" in login_session:
+        user_id = login_session["user_id"]
+    
     if category_id is None:    
-        return render_template("catalog.html", categories = categories)
+        return render_template("catalog.html", categories = categories, user_id = user_id)
     
     category = item_dao.get_category(category_id = category_id)
     items = item_dao.get_items(category_id = category_id)
     
-    return render_template("catalog.html", categories = categories, category = category, items = items)
+    return render_template("catalog.html", categories = categories, category = category, items = items, user_id = user_id)
 
 
 @app.route("/catalog/<int:category_id>/<int:item_id>")

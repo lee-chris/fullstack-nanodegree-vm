@@ -14,7 +14,11 @@
             <div class="menu-item"><a href="{{ url_for('view_items_html') }}">Edit Items</a></div>
         </div>
         <div class="login">
+          {% if user_id %}
+          <a id="logout" href="{{url_for('gdisconnect')}}">Logout</a>
+          {% else %}
           <a id="login" href="{{url_for('showLogin')}}">Login</a>
+          {% endif %}
         </div>
         <h1>Product Catalog</h1>
         
