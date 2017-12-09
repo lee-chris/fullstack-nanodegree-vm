@@ -237,6 +237,8 @@ def create_category():
     category = Category()
     category.name = request.form["name"]
     
+    category.user_id = login_session["user_id"]
+     
     category = item_dao.create_category(category)
     
     return jsonify(category.serialize)
@@ -255,6 +257,15 @@ def view_update_category_form(category_id):
 def update_category(category_id):
     """Handle request to update a product category."""
     
+    # validate ownership
+    category = item_dao.get_category(category_id)
+    if "user_id" not in login_session:
+        return jsonify(category.serialize)
+    
+    elif category.user_id != login_session["user_id"]:
+        return jsonify(category.serialize)
+    
+    # update category
     category = Category()
     category.id = category_id
     category.name = request.form["name"]
@@ -277,6 +288,15 @@ def view_delete_category_form(category_id):
 def delete_category(category_id):
     """Handle request to delete a product category."""
     
+    # validate ownership
+    category = item_dao.get_category(category_id)
+    if "user_id" not in login_session:
+        return jsonify(category.serialize)
+    
+    elif category.user_id != login_session["user_id"]:
+        return jsonify(category.serialize)
+        
+    #delete category
     category = Category()
     category.id = category_id
     
@@ -331,6 +351,7 @@ def create_item():
     item = Item()
     item.name = request.form["name"]
     item.category_id = request.form["category_id"]
+    item.user_id = login_session["user_id"]
     
     if request.form["description"] != "":
         item.description = request.form["description"]
@@ -354,6 +375,15 @@ def view_update_item_form(item_id):
 def update_item(item_id):
     """Handle request to update an item."""
     
+    # validate ownership
+    item = item_dao.get_item(item_id)
+    if "user_id" not in login_session:
+        return jsonify(item.serialize)
+    
+    elif item.user_id != login_session["user_id"]:
+        return jsonify(item.serialize)
+    
+    # update item
     item = Item()
     
     item.id = item_id
@@ -381,6 +411,15 @@ def view_delete_item_form(item_id):
 def delete_item(item_id):
     """Handle request to delete an item."""
     
+    # validate ownership
+    item = item_dao.get_item(item_id)
+    if "user_id" not in login_session:
+        return jsonify(item.serialize)
+    
+    elif item.user_id != login_session["user_id"]:
+        return jsonify(item.serialize)
+    
+    # delete item
     item = Item()
     item.id = item_id
     
