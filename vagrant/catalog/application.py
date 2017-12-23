@@ -20,6 +20,8 @@ APPLICATION_NAME = "Restaurant Menu Application"
 
 @app.route('/login')
 def showLogin():
+    """ Show the login page. """
+    
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in range(32))
     login_session['state'] = state
@@ -28,6 +30,8 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
+    """ Login using Google single sign on. """
+    
     # Validate state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -125,6 +129,8 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
+    """ Logout of Google single sign on. """
+    
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
