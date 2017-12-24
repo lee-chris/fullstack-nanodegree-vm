@@ -242,6 +242,10 @@ def create_category():
     category = Category()
     category.name = request.form["name"]
     
+    # verify authentication
+    if "user_id" not in login_session:
+        return jsonify(category.serialize)
+    
     category.user_id = login_session["user_id"]
      
     category = item_dao.create_category(category)
