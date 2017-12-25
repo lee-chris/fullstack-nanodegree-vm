@@ -259,6 +259,12 @@ def view_update_category_form(category_id):
     
     category = item_dao.get_category(category_id)
     
+    # validate ownership
+    if "user_id" not in login_session:
+        return redirect(url_for("showLogin"))
+    elif category.user_id != login_session["user_id"]:
+        return redirect(url_for("view_categories_html"))
+    
     return render_template("category_update.html", category = category);
 
 
@@ -289,6 +295,12 @@ def view_delete_category_form(category_id):
     """Display form to delete a product category."""
     
     category = item_dao.get_category(category_id)
+    
+    # validate ownership
+    if "user_id" not in login_session:
+        return redirect(url_for("showLogin"))
+    elif category.user_id != login_session["user_id"]:
+        return redirect(url_for("view_categories_html"))
     
     return render_template("category_delete.html", category = category);
 
