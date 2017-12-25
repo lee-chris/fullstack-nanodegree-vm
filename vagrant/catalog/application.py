@@ -263,6 +263,7 @@ def view_update_category_form(category_id):
     if "user_id" not in login_session:
         return redirect(url_for("showLogin"))
     elif category.user_id != login_session["user_id"]:
+        flash("Unauthorized operation")
         return redirect(url_for("view_categories_html"))
     
     return render_template("category_update.html", category = category);
@@ -278,7 +279,8 @@ def update_category(category_id):
         return redirect(url_for("showLogin"))
     
     elif category.user_id != login_session["user_id"]:
-        return jsonify(category.serialize)
+        flash("Unauthorized operation")
+        return redirect(url_for("view_categories_html"))
     
     # update category
     category = Category()
@@ -300,6 +302,7 @@ def view_delete_category_form(category_id):
     if "user_id" not in login_session:
         return redirect(url_for("showLogin"))
     elif category.user_id != login_session["user_id"]:
+        flash("Unauthorized operation")
         return redirect(url_for("view_categories_html"))
     
     return render_template("category_delete.html", category = category);
@@ -315,7 +318,8 @@ def delete_category(category_id):
         return redirect(url_for("showLogin"))
     
     elif category.user_id != login_session["user_id"]:
-        return jsonify(category.serialize)
+        flash("Unauthorized operation")
+        return redirect(url_for("view_categories_html"))
         
     #delete category
     category = Category()
@@ -402,7 +406,8 @@ def update_item(item_id):
         return redirect(url_for("showLogin"))
     
     elif item.user_id != login_session["user_id"]:
-        return jsonify(item.serialize)
+        flash("Unauthorized operation")
+        return redirect(url_for("view_items_html"))
     
     # update item
     item = Item()
@@ -438,7 +443,8 @@ def delete_item(item_id):
         return redirect(url_for("showLogin"))
     
     elif item.user_id != login_session["user_id"]:
-        return jsonify(item.serialize)
+        flash("Unauthorized operation")
+        return redirect(url_for("view_items_html"))
     
     # delete item
     item = Item()
