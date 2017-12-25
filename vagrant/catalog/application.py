@@ -244,7 +244,7 @@ def create_category():
     
     # verify authentication
     if "user_id" not in login_session:
-        return jsonify(category.serialize)
+        return redirect(url_for("showLogin"))
     
     category.user_id = login_session["user_id"]
      
@@ -269,7 +269,7 @@ def update_category(category_id):
     # validate ownership
     category = item_dao.get_category(category_id)
     if "user_id" not in login_session:
-        return jsonify(category.serialize)
+        return redirect(url_for("showLogin"))
     
     elif category.user_id != login_session["user_id"]:
         return jsonify(category.serialize)
@@ -300,7 +300,7 @@ def delete_category(category_id):
     # validate ownership
     category = item_dao.get_category(category_id)
     if "user_id" not in login_session:
-        return jsonify(category.serialize)
+        return redirect(url_for("showLogin"))
     
     elif category.user_id != login_session["user_id"]:
         return jsonify(category.serialize)
@@ -387,7 +387,7 @@ def update_item(item_id):
     # validate ownership
     item = item_dao.get_item(item_id)
     if "user_id" not in login_session:
-        return jsonify(item.serialize)
+        return redirect(url_for("showLogin"))
     
     elif item.user_id != login_session["user_id"]:
         return jsonify(item.serialize)
@@ -423,7 +423,7 @@ def delete_item(item_id):
     # validate ownership
     item = item_dao.get_item(item_id)
     if "user_id" not in login_session:
-        return jsonify(item.serialize)
+        return redirect(url_for("showLogin"))
     
     elif item.user_id != login_session["user_id"]:
         return jsonify(item.serialize)
